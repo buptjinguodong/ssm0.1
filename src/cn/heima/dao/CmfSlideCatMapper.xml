@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.heima.dao.CmfSlideCatMapper" >
+  <resultMap id="BaseResultMap" type="cn.heima.pojo.CmfSlideCat" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="cat_name" property="catName" jdbcType="VARCHAR" />
+    <result column="cat_idname" property="catIdname" jdbcType="VARCHAR" />
+    <result column="cat_status" property="catStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.heima.pojo.CmfSlideCat" extends="BaseResultMap" >
+    <result column="cat_remark" property="catRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cid, cat_name, cat_idname, cat_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    cat_remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.heima.pojo.CmfSlideCatExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_slide_cat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.heima.pojo.CmfSlideCatExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cmf_slide_cat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_slide_cat
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cmf_slide_cat
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.heima.pojo.CmfSlideCatExample" >
+    delete from cmf_slide_cat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.heima.pojo.CmfSlideCat" >
+    insert into cmf_slide_cat (cid, cat_name, cat_idname, 
+      cat_status, cat_remark)
+    values (#{cid,jdbcType=INTEGER}, #{catName,jdbcType=VARCHAR}, #{catIdname,jdbcType=VARCHAR}, 
+      #{catStatus,jdbcType=INTEGER}, #{catRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.heima.pojo.CmfSlideCat" >
+    insert into cmf_slide_cat
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="catName != null" >
+        cat_name,
+      </if>
+      <if test="catIdname != null" >
+        cat_idname,
+      </if>
+      <if test="catStatus != null" >
+        cat_status,
+      </if>
+      <if test="catRemark != null" >
+        cat_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="catName != null" >
+        #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catIdname != null" >
+        #{catIdname,jdbcType=VARCHAR},
+      </if>
+      <if test="catStatus != null" >
+        #{catStatus,jdbcType=INTEGER},
+      </if>
+      <if test="catRemark != null" >
+        #{catRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.heima.pojo.CmfSlideCatExample" resultType="java.lang.Integer" >
+    select count(*) from cmf_slide_cat
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cmf_slide_cat
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.catName != null" >
+        cat_name = #{record.catName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catIdname != null" >
+        cat_idname = #{record.catIdname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catStatus != null" >
+        cat_status = #{record.catStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.catRemark != null" >
+        cat_remark = #{record.catRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update cmf_slide_cat
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cat_name = #{record.catName,jdbcType=VARCHAR},
+      cat_idname = #{record.catIdname,jdbcType=VARCHAR},
+      cat_status = #{record.catStatus,jdbcType=INTEGER},
+      cat_remark = #{record.catRemark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cmf_slide_cat
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cat_name = #{record.catName,jdbcType=VARCHAR},
+      cat_idname = #{record.catIdname,jdbcType=VARCHAR},
+      cat_status = #{record.catStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.heima.pojo.CmfSlideCat" >
+    update cmf_slide_cat
+    <set >
+      <if test="catName != null" >
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catIdname != null" >
+        cat_idname = #{catIdname,jdbcType=VARCHAR},
+      </if>
+      <if test="catStatus != null" >
+        cat_status = #{catStatus,jdbcType=INTEGER},
+      </if>
+      <if test="catRemark != null" >
+        cat_remark = #{catRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.heima.pojo.CmfSlideCat" >
+    update cmf_slide_cat
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      cat_idname = #{catIdname,jdbcType=VARCHAR},
+      cat_status = #{catStatus,jdbcType=INTEGER},
+      cat_remark = #{catRemark,jdbcType=LONGVARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.heima.pojo.CmfSlideCat" >
+    update cmf_slide_cat
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      cat_idname = #{catIdname,jdbcType=VARCHAR},
+      cat_status = #{catStatus,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

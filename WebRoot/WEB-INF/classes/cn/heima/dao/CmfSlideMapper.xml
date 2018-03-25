@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.heima.dao.CmfSlideMapper" >
+  <resultMap id="BaseResultMap" type="cn.heima.pojo.CmfSlide" >
+    <id column="slide_id" property="slideId" jdbcType="BIGINT" />
+    <result column="slide_cid" property="slideCid" jdbcType="INTEGER" />
+    <result column="slide_name" property="slideName" jdbcType="VARCHAR" />
+    <result column="slide_pic" property="slidePic" jdbcType="VARCHAR" />
+    <result column="slide_url" property="slideUrl" jdbcType="VARCHAR" />
+    <result column="slide_des" property="slideDes" jdbcType="VARCHAR" />
+    <result column="slide_status" property="slideStatus" jdbcType="INTEGER" />
+    <result column="listorder" property="listorder" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.heima.pojo.CmfSlide" extends="BaseResultMap" >
+    <result column="slide_content" property="slideContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    slide_id, slide_cid, slide_name, slide_pic, slide_url, slide_des, slide_status, listorder
+  </sql>
+  <sql id="Blob_Column_List" >
+    slide_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.heima.pojo.CmfSlideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_slide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.heima.pojo.CmfSlideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cmf_slide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_slide
+    where slide_id = #{slideId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cmf_slide
+    where slide_id = #{slideId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.heima.pojo.CmfSlideExample" >
+    delete from cmf_slide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.heima.pojo.CmfSlide" >
+    insert into cmf_slide (slide_id, slide_cid, slide_name, 
+      slide_pic, slide_url, slide_des, 
+      slide_status, listorder, slide_content
+      )
+    values (#{slideId,jdbcType=BIGINT}, #{slideCid,jdbcType=INTEGER}, #{slideName,jdbcType=VARCHAR}, 
+      #{slidePic,jdbcType=VARCHAR}, #{slideUrl,jdbcType=VARCHAR}, #{slideDes,jdbcType=VARCHAR}, 
+      #{slideStatus,jdbcType=INTEGER}, #{listorder,jdbcType=INTEGER}, #{slideContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.heima.pojo.CmfSlide" >
+    insert into cmf_slide
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="slideId != null" >
+        slide_id,
+      </if>
+      <if test="slideCid != null" >
+        slide_cid,
+      </if>
+      <if test="slideName != null" >
+        slide_name,
+      </if>
+      <if test="slidePic != null" >
+        slide_pic,
+      </if>
+      <if test="slideUrl != null" >
+        slide_url,
+      </if>
+      <if test="slideDes != null" >
+        slide_des,
+      </if>
+      <if test="slideStatus != null" >
+        slide_status,
+      </if>
+      <if test="listorder != null" >
+        listorder,
+      </if>
+      <if test="slideContent != null" >
+        slide_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="slideId != null" >
+        #{slideId,jdbcType=BIGINT},
+      </if>
+      <if test="slideCid != null" >
+        #{slideCid,jdbcType=INTEGER},
+      </if>
+      <if test="slideName != null" >
+        #{slideName,jdbcType=VARCHAR},
+      </if>
+      <if test="slidePic != null" >
+        #{slidePic,jdbcType=VARCHAR},
+      </if>
+      <if test="slideUrl != null" >
+        #{slideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="slideDes != null" >
+        #{slideDes,jdbcType=VARCHAR},
+      </if>
+      <if test="slideStatus != null" >
+        #{slideStatus,jdbcType=INTEGER},
+      </if>
+      <if test="listorder != null" >
+        #{listorder,jdbcType=INTEGER},
+      </if>
+      <if test="slideContent != null" >
+        #{slideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.heima.pojo.CmfSlideExample" resultType="java.lang.Integer" >
+    select count(*) from cmf_slide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cmf_slide
+    <set >
+      <if test="record.slideId != null" >
+        slide_id = #{record.slideId,jdbcType=BIGINT},
+      </if>
+      <if test="record.slideCid != null" >
+        slide_cid = #{record.slideCid,jdbcType=INTEGER},
+      </if>
+      <if test="record.slideName != null" >
+        slide_name = #{record.slideName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slidePic != null" >
+        slide_pic = #{record.slidePic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slideUrl != null" >
+        slide_url = #{record.slideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slideDes != null" >
+        slide_des = #{record.slideDes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slideStatus != null" >
+        slide_status = #{record.slideStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.listorder != null" >
+        listorder = #{record.listorder,jdbcType=INTEGER},
+      </if>
+      <if test="record.slideContent != null" >
+        slide_content = #{record.slideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update cmf_slide
+    set slide_id = #{record.slideId,jdbcType=BIGINT},
+      slide_cid = #{record.slideCid,jdbcType=INTEGER},
+      slide_name = #{record.slideName,jdbcType=VARCHAR},
+      slide_pic = #{record.slidePic,jdbcType=VARCHAR},
+      slide_url = #{record.slideUrl,jdbcType=VARCHAR},
+      slide_des = #{record.slideDes,jdbcType=VARCHAR},
+      slide_status = #{record.slideStatus,jdbcType=INTEGER},
+      listorder = #{record.listorder,jdbcType=INTEGER},
+      slide_content = #{record.slideContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cmf_slide
+    set slide_id = #{record.slideId,jdbcType=BIGINT},
+      slide_cid = #{record.slideCid,jdbcType=INTEGER},
+      slide_name = #{record.slideName,jdbcType=VARCHAR},
+      slide_pic = #{record.slidePic,jdbcType=VARCHAR},
+      slide_url = #{record.slideUrl,jdbcType=VARCHAR},
+      slide_des = #{record.slideDes,jdbcType=VARCHAR},
+      slide_status = #{record.slideStatus,jdbcType=INTEGER},
+      listorder = #{record.listorder,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.heima.pojo.CmfSlide" >
+    update cmf_slide
+    <set >
+      <if test="slideCid != null" >
+        slide_cid = #{slideCid,jdbcType=INTEGER},
+      </if>
+      <if test="slideName != null" >
+        slide_name = #{slideName,jdbcType=VARCHAR},
+      </if>
+      <if test="slidePic != null" >
+        slide_pic = #{slidePic,jdbcType=VARCHAR},
+      </if>
+      <if test="slideUrl != null" >
+        slide_url = #{slideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="slideDes != null" >
+        slide_des = #{slideDes,jdbcType=VARCHAR},
+      </if>
+      <if test="slideStatus != null" >
+        slide_status = #{slideStatus,jdbcType=INTEGER},
+      </if>
+      <if test="listorder != null" >
+        listorder = #{listorder,jdbcType=INTEGER},
+      </if>
+      <if test="slideContent != null" >
+        slide_content = #{slideContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where slide_id = #{slideId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.heima.pojo.CmfSlide" >
+    update cmf_slide
+    set slide_cid = #{slideCid,jdbcType=INTEGER},
+      slide_name = #{slideName,jdbcType=VARCHAR},
+      slide_pic = #{slidePic,jdbcType=VARCHAR},
+      slide_url = #{slideUrl,jdbcType=VARCHAR},
+      slide_des = #{slideDes,jdbcType=VARCHAR},
+      slide_status = #{slideStatus,jdbcType=INTEGER},
+      listorder = #{listorder,jdbcType=INTEGER},
+      slide_content = #{slideContent,jdbcType=LONGVARCHAR}
+    where slide_id = #{slideId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.heima.pojo.CmfSlide" >
+    update cmf_slide
+    set slide_cid = #{slideCid,jdbcType=INTEGER},
+      slide_name = #{slideName,jdbcType=VARCHAR},
+      slide_pic = #{slidePic,jdbcType=VARCHAR},
+      slide_url = #{slideUrl,jdbcType=VARCHAR},
+      slide_des = #{slideDes,jdbcType=VARCHAR},
+      slide_status = #{slideStatus,jdbcType=INTEGER},
+      listorder = #{listorder,jdbcType=INTEGER}
+    where slide_id = #{slideId,jdbcType=BIGINT}
+  </update>
+</mapper>

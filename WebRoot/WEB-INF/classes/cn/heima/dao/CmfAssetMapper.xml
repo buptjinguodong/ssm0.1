@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.heima.dao.CmfAssetMapper" >
+  <resultMap id="BaseResultMap" type="cn.heima.pojo.CmfAsset" >
+    <id column="aid" property="aid" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filesize" property="filesize" jdbcType="INTEGER" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="uploadtime" property="uploadtime" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="suffix" property="suffix" jdbcType="VARCHAR" />
+    <result column="download_times" property="downloadTimes" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.heima.pojo.CmfAsset" extends="BaseResultMap" >
+    <result column="meta" property="meta" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    aid, uid, key, filename, filesize, filepath, uploadtime, status, suffix, download_times
+  </sql>
+  <sql id="Blob_Column_List" >
+    meta
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.heima.pojo.CmfAssetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_asset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.heima.pojo.CmfAssetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cmf_asset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cmf_asset
+    where aid = #{aid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cmf_asset
+    where aid = #{aid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.heima.pojo.CmfAssetExample" >
+    delete from cmf_asset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.heima.pojo.CmfAsset" >
+    insert into cmf_asset (aid, uid, key, 
+      filename, filesize, filepath, 
+      uploadtime, status, suffix, 
+      download_times, meta)
+    values (#{aid,jdbcType=BIGINT}, #{uid,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, 
+      #{filename,jdbcType=VARCHAR}, #{filesize,jdbcType=INTEGER}, #{filepath,jdbcType=VARCHAR}, 
+      #{uploadtime,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{suffix,jdbcType=VARCHAR}, 
+      #{downloadTimes,jdbcType=INTEGER}, #{meta,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.heima.pojo.CmfAsset" >
+    insert into cmf_asset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="key != null" >
+        key,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filesize != null" >
+        filesize,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="suffix != null" >
+        suffix,
+      </if>
+      <if test="downloadTimes != null" >
+        download_times,
+      </if>
+      <if test="meta != null" >
+        meta,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null" >
+        #{uploadtime,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadTimes != null" >
+        #{downloadTimes,jdbcType=INTEGER},
+      </if>
+      <if test="meta != null" >
+        #{meta,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.heima.pojo.CmfAssetExample" resultType="java.lang.Integer" >
+    select count(*) from cmf_asset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cmf_asset
+    <set >
+      <if test="record.aid != null" >
+        aid = #{record.aid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.key != null" >
+        key = #{record.key,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null" >
+        filename = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filesize != null" >
+        filesize = #{record.filesize,jdbcType=INTEGER},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadtime != null" >
+        uploadtime = #{record.uploadtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.suffix != null" >
+        suffix = #{record.suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.downloadTimes != null" >
+        download_times = #{record.downloadTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.meta != null" >
+        meta = #{record.meta,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update cmf_asset
+    set aid = #{record.aid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=INTEGER},
+      key = #{record.key,jdbcType=VARCHAR},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      filesize = #{record.filesize,jdbcType=INTEGER},
+      filepath = #{record.filepath,jdbcType=VARCHAR},
+      uploadtime = #{record.uploadtime,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      suffix = #{record.suffix,jdbcType=VARCHAR},
+      download_times = #{record.downloadTimes,jdbcType=INTEGER},
+      meta = #{record.meta,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cmf_asset
+    set aid = #{record.aid,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=INTEGER},
+      key = #{record.key,jdbcType=VARCHAR},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      filesize = #{record.filesize,jdbcType=INTEGER},
+      filepath = #{record.filepath,jdbcType=VARCHAR},
+      uploadtime = #{record.uploadtime,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      suffix = #{record.suffix,jdbcType=VARCHAR},
+      download_times = #{record.downloadTimes,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.heima.pojo.CmfAsset" >
+    update cmf_asset
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="key != null" >
+        key = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        filesize = #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime = #{uploadtime,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        suffix = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadTimes != null" >
+        download_times = #{downloadTimes,jdbcType=INTEGER},
+      </if>
+      <if test="meta != null" >
+        meta = #{meta,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.heima.pojo.CmfAsset" >
+    update cmf_asset
+    set uid = #{uid,jdbcType=INTEGER},
+      key = #{key,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      filesize = #{filesize,jdbcType=INTEGER},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      uploadtime = #{uploadtime,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      download_times = #{downloadTimes,jdbcType=INTEGER},
+      meta = #{meta,jdbcType=LONGVARCHAR}
+    where aid = #{aid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.heima.pojo.CmfAsset" >
+    update cmf_asset
+    set uid = #{uid,jdbcType=INTEGER},
+      key = #{key,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      filesize = #{filesize,jdbcType=INTEGER},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      uploadtime = #{uploadtime,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      download_times = #{downloadTimes,jdbcType=INTEGER}
+    where aid = #{aid,jdbcType=BIGINT}
+  </update>
+</mapper>
